@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Invoice Generator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 10px;
+  background: #eaeaea;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.generate { background: #0b3c6d; }
+.print { background: #555; }
+.add { background: green; }
+.save { background: #ff9800; }
+.pdf { background: #e91e63; }
+.new { background: #333; }
+
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr 70px 90px 40px;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.remove { background: red; }
+
+.invoice {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fff;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0b3c6d;
+}
+
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+th { text-align: left; color: #0b3c6d; }
+td { padding: 6px 0; }
+
+.total {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 600;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.bank {
+  margin-top: 20px;
+  border: 2px solid #0b3c6d;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.thank {
+  font-family: 'Great Vibes', cursive;
+  font-size: 28px;
+  margin-top: 20px;
+  color: #0b3c6d;
+}
+
+/* optional: nicer date inputs */
+input[type="date"] {
+  font-family: 'Poppins', sans-serif;
+}
+
+@media print {
+  body * { visibility: hidden; }
+  #output, #output * { visibility: visible; }
+  #output {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+  }
+  button, input { display:none; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Invoice Generator</h2>
+
+<input id="company" placeholder="Your Company Name">
+<input id="billTo" placeholder="Bill To">
+<input id="invoiceNo" placeholder="Invoice Number">
+
+<!-- ✅ CALENDAR DATE PICKERS -->
+<input id="date" type="date">
+<input id="due" type="date">
+
+<h3>Items</h3>
+<div id="items"></div>
+
+<button class="add" onclick="addItem()">+ Add Item</button>
+
+<button class="generate" onclick="generateInvoice()">Generate Invoice</button>
+
+<button class="print" onclick="printInvoice()">Print</button>
+
+<button class="save" onclick="saveOnPhone()">Save On Phone</button>
+
+<button class="pdf" onclick="saveAsPDF()">Save as PDF</button>
+
+<button class="new" onclick="newInvoice()">New Invoice</button>
+
+<div id="output" class="invoice"></div>
+
+</div>
+
+<script>
+
+/* ADD ITEM */
+function addItem() {
+  const container = document.getElementById('items');
+
+  const row = document.createElement('div');
+  row.className = 'item-row';
+
+  row.innerHTML = `
+    <input placeholder="Description">
+    <input type="number" placeholder="Qty">
+    <input type="number" placeholder="Price">
+    <button class="remove" onclick="this.parentElement.remove()">X</button>
+  `;
+
+  container.appendChild(row);
+}
+addItem();
+
+/* FORMAT DATE (nice display) */
+function formatDate(d) {
+  if (!d) return "";
+  return new Date(d).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  });
+}
+
+/* GENERATE INVOICE */
+function generateInvoice() {
+  const rows = document.querySelectorAll('.item-row');
+
+  let tableRows = '';
+  let total = 0;
+
+  rows.forEach(row => {
+    const i = row.querySelectorAll('input');
+
+    const desc = i[0].value;
+    const qty = parseFloat(i[1].value) || 0;
+    const price = parseFloat(i[2].value) || 0;
+
+    const amount = qty * price;
+    total += amount;
+
+    tableRows += `
+      <tr>
+        <td>${qty}</td>
+        <td>${desc}</td>
+        <td>£${price.toFixed(2)}</td>
+        <td>£${amount.toFixed(2)}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById('output').innerHTML = `
+    <div class="title">INVOICE</div>
+
+    <p>${company.value}</p>
+
+    <p>Invoice: ${invoiceNo.value}</p>
+    <p>Date: ${formatDate(date.value)}</p>
+    <p>Due: ${formatDate(due.value)}</p>
+
+    <h3>Bill To</h3>
+    <p>${billTo.value}</p>
+
+    <table>
+      <tr>
+        <th>Qty</th><th>Description</th><th>Price</th><th>Total</th>
+      </tr>
+      ${tableRows}
+    </table>
+
+    <div class="total">Total £${total.toFixed(2)}</div>
+
+    <div class="bank">
+      <p>Account Name: XXXXX</p>
+      <p>Sort Code: XX-XX-XX</p>
+      <p>Account No: XXXXX</p>
+    </div>
+
+    <div class="thank">Thank you</div>
+  `;
+}
+
+/* PRINT */
+function printInvoice() {
+  window.print();
+}
+
+/* SAVE IMAGE */
+function saveOnPhone() {
+  html2canvas(document.getElementById('output'), { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'invoice.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+
+/* PDF FIXED */
+function saveAsPDF() {
+  const element = document.getElementById('output');
+
+  html2pdf().set({
+    margin: 5,
+    filename: 'invoice.pdf',
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  }).from(element).save();
+}
+
+/* RESET */
+function newInvoice() {
+  company.value = "";
+  billTo.value = "";
+  invoiceNo.value = "";
+  date.value = "";
+  due.value = "";
+
+  document.getElementById('items').innerHTML = "";
+  addItem();
+
+  document.getElementById('output').innerHTML = "";
+}
+
+/* AUTO SAVE */
+function autoSave() {
+  const data = {
+    company: company.value,
+    billTo: billTo.value,
+    invoiceNo: invoiceNo.value,
+    date: date.value,
+    due: due.value,
+    items: []
+  };
+
+  document.querySelectorAll('.item-row').forEach(r => {
+    const i = r.querySelectorAll('input');
+    data.items.push({
+      desc: i[0].value,
+      qty: i[1].value,
+      price: i[2].value
+    });
+  });
+
+  localStorage.setItem("invoiceDraft", JSON.stringify(data));
+}
+
+document.addEventListener("input", autoSave);
+
+/* CLEAN START */
+window.onload = function () {
+  document.getElementById('items').innerHTML = "";
+  addItem();
+};
+
+</script>
+
+</body>
+</html>
