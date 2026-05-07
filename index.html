@@ -1,129 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Invoice Generator</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-* { box-sizing: border-box; }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 10px;
-  background: #eaeaea;
+*{
+  box-sizing:border-box;
 }
 
-.container {
-  max-width: 650px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
+body{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:10px;
+  background:#eaeaea;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.container{
+  max-width:650px;
+  margin:auto;
+  background:#fff;
+  padding:18px;
+  border-radius:10px;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
+/* HEADING */
+
+h2{
+  text-align:center;
+  color:#0b3c6d;
+  font-size:22px;
+  margin-bottom:18px;
 }
 
-.generate { background: #0b3c6d; }
-.print { background: #555; }
-.add { background: green; }
-.save { background: #ff9800; }
-.pdf { background: #e91e63; }
-.new { background: #333; }
+/* INPUTS */
 
-.item-row {
-  display: grid;
-  grid-template-columns: 1fr 70px 90px 40px;
-  gap: 5px;
-  margin-bottom: 5px;
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+  border-radius:6px;
+  border:1px solid #999;
+  font-weight:700;
+  font-size:14px;
+  color:#000;
+  background:#fff;
 }
 
-.remove { background: red; }
-
-.invoice {
-  margin-top: 20px;
-  padding: 20px;
-  background: #fff;
+input::placeholder{
+  color:#444;
+  font-weight:700;
 }
 
-.title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #0b3c6d;
+/* BUTTONS */
+
+button{
+  width:100%;
+  padding:11px;
+  margin-top:8px;
+  border:none;
+  border-radius:6px;
+  color:#fff;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
 }
 
-table {
-  width: 100%;
-  margin-top: 15px;
-  border-collapse: collapse;
-  font-size: 12px;
+.generate{ background:#0b3c6d; }
+
+.print{ background:#555; }
+
+.add{ background:green; }
+
+.save{ background:#ff9800; }
+
+.pdf{ background:#e91e63; }
+
+.new{ background:#333; }
+
+.remove{
+  background:red;
+  font-size:12px;
+  padding:8px 5px;
+  white-space:nowrap;
 }
 
-th { text-align: left; color: #0b3c6d; }
-td { padding: 6px 0; }
+/* DATE SECTION */
 
-.total {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  font-weight: 600;
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
+.date-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+  width:100%;
+  flex-wrap:wrap;
 }
 
-.bank {
-  margin-top: 20px;
-  border: 2px solid #0b3c6d;
-  padding: 12px;
-  border-radius: 6px;
+.date-box{
+  width:100%;
+  max-width:220px;
 }
 
-.thank {
-  font-family: 'Great Vibes', cursive;
-  font-size: 28px;
-  margin-top: 20px;
-  color: #0b3c6d;
+.date-box label{
+  display:block;
+  margin-bottom:5px;
+  font-weight:700;
+  color:#0b3c6d;
+  font-size:14px;
+  text-align:center;
 }
 
-/* optional: nicer date inputs */
-input[type="date"] {
-  font-family: 'Poppins', sans-serif;
+.date-box input{
+  width:100%;
+  padding:8px;
+  font-size:13px;
+  text-align:center;
 }
 
-@media print {
-  body * { visibility: hidden; }
-  #output, #output * { visibility: visible; }
-  #output {
-    position: absolute;
+/* ITEM ROW */
+
+.item-row{
+  display:grid;
+  grid-template-columns:1fr 60px 75px 95px;
+  gap:5px;
+  margin-bottom:8px;
+  align-items:center;
+}
+
+.item-row input[type="number"]{
+  padding:8px;
+  font-size:13px;
+}
+
+/* INVOICE OUTPUT */
+
+.invoice{
+  margin-top:20px;
+  padding:20px;
+  background:#fff;
+}
+
+.title{
+  font-size:24px;
+  font-weight:700;
+  color:#0b3c6d;
+}
+
+table{
+  width:100%;
+  margin-top:15px;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+th{
+  text-align:left;
+  color:#0b3c6d;
+  border-bottom:1px solid #ddd;
+  padding-bottom:5px;
+}
+
+td{
+  padding:6px 0;
+  border-bottom:1px solid #f1f1f1;
+}
+
+.total{
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  font-weight:700;
+  border-top:1px solid #ddd;
+  padding-top:10px;
+}
+
+.bank{
+  margin-top:20px;
+  border:2px solid #0b3c6d;
+  padding:12px;
+  border-radius:6px;
+}
+
+.thank{
+  font-family:'Great Vibes',cursive;
+  font-size:28px;
+  margin-top:20px;
+  color:#0b3c6d;
+}
+
+input[type="date"]{
+  font-family:'Poppins',sans-serif;
+  max-width:100%;
+}
+
+/* MOBILE */
+
+@media (max-width:600px){
+
+  .container{
+    padding:14px;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  .date-row{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .date-box{
+    width:100%;
+    max-width:190px;
+  }
+
+  input[type="date"]{
+    width:100%;
+    max-width:190px;
+    margin:auto;
+    display:block;
+  }
+
+  .item-row{
+    grid-template-columns:1fr;
+  }
+
+  .remove{
+    width:100%;
+  }
+
+  table{
+    font-size:11px;
+  }
+
+}
+
+/* PRINT */
+
+@media print{
+
+  body *{
+    visibility:hidden;
+  }
+
+  #output,
+  #output *{
+    visibility:visible;
+  }
+
+  #output{
+    position:absolute;
     top:0;
     left:0;
     width:100%;
   }
-  button, input { display:none; }
+
+  button,
+  input,
+  label{
+    display:none;
+  }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -133,27 +287,60 @@ input[type="date"] {
 <h2>Invoice Generator</h2>
 
 <input id="company" placeholder="Your Company Name">
+
 <input id="billTo" placeholder="Bill To">
+
 <input id="invoiceNo" placeholder="Invoice Number">
 
-<!-- ✅ CALENDAR DATE PICKERS -->
-<input id="date" type="date">
-<input id="due" type="date">
+<!-- DATE SECTION -->
+
+<div class="date-row">
+
+  <div class="date-box">
+
+    <label>Invoice Date</label>
+
+    <input id="date" type="date">
+
+  </div>
+
+  <div class="date-box">
+
+    <label>Due Date</label>
+
+    <input id="due" type="date">
+
+  </div>
+
+</div>
 
 <h3>Items</h3>
+
 <div id="items"></div>
 
-<button class="add" onclick="addItem()">+ Add Item</button>
+<button class="add" onclick="addItem()">
+  + Add Item
+</button>
 
-<button class="generate" onclick="generateInvoice()">Generate Invoice</button>
+<button class="generate" onclick="generateInvoice()">
+  Generate Invoice
+</button>
 
-<button class="print" onclick="printInvoice()">Print</button>
+<button class="print" onclick="printInvoice()">
+  Print
+</button>
 
-<button class="save" onclick="saveOnPhone()">Save On Phone</button>
+<button class="save" onclick="saveOnPhone()">
+  Save On Phone
+</button>
 
-<button class="pdf" onclick="saveAsPDF()">Save as PDF</button>
+<button class="pdf" onclick="saveAsPDF()">
+  Save as PDF
+</button>
 
-<button class="new" onclick="newInvoice()">New Invoice</button>
+<button class="new" onclick="newInvoice()">
+  New Invoice
+</button>
 
 <div id="output" class="invoice"></div>
 
@@ -162,162 +349,283 @@ input[type="date"] {
 <script>
 
 /* ADD ITEM */
-function addItem() {
-  const container = document.getElementById('items');
 
-  const row = document.createElement('div');
-  row.className = 'item-row';
+function addItem(){
 
-  row.innerHTML = `
+  const container=document.getElementById('items');
+
+  const row=document.createElement('div');
+
+  row.className='item-row';
+
+  row.innerHTML=`
+
     <input placeholder="Description">
+
     <input type="number" placeholder="Qty">
+
     <input type="number" placeholder="Price">
-    <button class="remove" onclick="this.parentElement.remove()">X</button>
+
+    <button class="remove" onclick="this.parentElement.remove()">
+      Remove Item
+    </button>
+
   `;
 
   container.appendChild(row);
 }
+
 addItem();
 
-/* FORMAT DATE (nice display) */
-function formatDate(d) {
-  if (!d) return "";
-  return new Date(d).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric'
+/* FORMAT DATE */
+
+function formatDate(d){
+
+  if(!d) return "";
+
+  return new Date(d).toLocaleDateString('en-GB',{
+
+    day:'2-digit',
+    month:'short',
+    year:'numeric'
+
   });
 }
 
 /* GENERATE INVOICE */
-function generateInvoice() {
-  const rows = document.querySelectorAll('.item-row');
 
-  let tableRows = '';
-  let total = 0;
+function generateInvoice(){
 
-  rows.forEach(row => {
-    const i = row.querySelectorAll('input');
+  const rows=document.querySelectorAll('.item-row');
 
-    const desc = i[0].value;
-    const qty = parseFloat(i[1].value) || 0;
-    const price = parseFloat(i[2].value) || 0;
+  let tableRows='';
 
-    const amount = qty * price;
-    total += amount;
+  let total=0;
 
-    tableRows += `
+  rows.forEach(row=>{
+
+    const i=row.querySelectorAll('input');
+
+    const desc=i[0].value;
+
+    const qty=parseFloat(i[1].value)||0;
+
+    const price=parseFloat(i[2].value)||0;
+
+    const amount=qty*price;
+
+    total+=amount;
+
+    tableRows+=`
+
       <tr>
+
         <td>${qty}</td>
+
         <td>${desc}</td>
+
         <td>£${price.toFixed(2)}</td>
+
         <td>£${amount.toFixed(2)}</td>
+
       </tr>
+
     `;
   });
 
-  document.getElementById('output').innerHTML = `
+  document.getElementById('output').innerHTML=`
+
     <div class="title">INVOICE</div>
 
-    <p>${company.value}</p>
+    <p><strong>${company.value}</strong></p>
 
-    <p>Invoice: ${invoiceNo.value}</p>
-    <p>Date: ${formatDate(date.value)}</p>
-    <p>Due: ${formatDate(due.value)}</p>
+    <p><strong>Invoice:</strong> ${invoiceNo.value}</p>
+
+    <p><strong>Date:</strong> ${formatDate(date.value)}</p>
+
+    <p><strong>Due:</strong> ${formatDate(due.value)}</p>
 
     <h3>Bill To</h3>
+
     <p>${billTo.value}</p>
 
     <table>
+
       <tr>
-        <th>Qty</th><th>Description</th><th>Price</th><th>Total</th>
+
+        <th>Qty</th>
+
+        <th>Description</th>
+
+        <th>Price</th>
+
+        <th>Total</th>
+
       </tr>
+
       ${tableRows}
+
     </table>
 
-    <div class="total">Total £${total.toFixed(2)}</div>
+    <div class="total">
 
-    <div class="bank">
-      <p>Account Name: XXXXX</p>
-      <p>Sort Code: XX-XX-XX</p>
-      <p>Account No: XXXXX</p>
+      Total £${total.toFixed(2)}
+
     </div>
 
-    <div class="thank">Thank you</div>
+    <div class="bank">
+
+      <p>Account Name: XXXXX</p>
+
+      <p>Sort Code: XX-XX-XX</p>
+
+      <p>Account No: XXXXX</p>
+
+    </div>
+
+    <div class="thank">
+
+      Thank you
+
+    </div>
+
   `;
 }
 
 /* PRINT */
-function printInvoice() {
+
+function printInvoice(){
+
   window.print();
 }
 
 /* SAVE IMAGE */
-function saveOnPhone() {
-  html2canvas(document.getElementById('output'), { scale: 2 }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'invoice.png';
-    link.href = canvas.toDataURL();
+
+function saveOnPhone(){
+
+  const invoiceName=invoiceNo.value || 'invoice';
+
+  html2canvas(document.getElementById('output'),{
+
+    scale:2
+
+  }).then(canvas=>{
+
+    const link=document.createElement('a');
+
+    link.download=`${invoiceName}.png`;
+
+    link.href=canvas.toDataURL();
+
     link.click();
+
   });
 }
 
-/* PDF FIXED */
-function saveAsPDF() {
-  const element = document.getElementById('output');
+/* SAVE PDF */
+
+function saveAsPDF(){
+
+  const element=document.getElementById('output');
+
+  const invoiceName=invoiceNo.value || 'invoice';
 
   html2pdf().set({
-    margin: 5,
-    filename: 'invoice.pdf',
-    image: { type: 'jpeg', quality: 1 },
-    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'] }
+
+    margin:5,
+
+    filename:`${invoiceName}.pdf`,
+
+    image:{
+      type:'jpeg',
+      quality:1
+    },
+
+    html2canvas:{
+      scale:2,
+      useCORS:true,
+      scrollY:0
+    },
+
+    jsPDF:{
+      unit:'mm',
+      format:'a4',
+      orientation:'portrait'
+    },
+
+    pagebreak:{
+      mode:['css','legacy']
+    }
+
   }).from(element).save();
 }
 
-/* RESET */
-function newInvoice() {
-  company.value = "";
-  billTo.value = "";
-  invoiceNo.value = "";
-  date.value = "";
-  due.value = "";
+/* NEW INVOICE */
 
-  document.getElementById('items').innerHTML = "";
+function newInvoice(){
+
+  company.value="";
+  billTo.value="";
+  invoiceNo.value="";
+  date.value="";
+  due.value="";
+
+  document.getElementById('items').innerHTML='';
+
   addItem();
 
-  document.getElementById('output').innerHTML = "";
+  document.getElementById('output').innerHTML='';
 }
 
 /* AUTO SAVE */
-function autoSave() {
-  const data = {
-    company: company.value,
-    billTo: billTo.value,
-    invoiceNo: invoiceNo.value,
-    date: date.value,
-    due: due.value,
-    items: []
+
+function autoSave(){
+
+  const data={
+
+    company:company.value,
+
+    billTo:billTo.value,
+
+    invoiceNo:invoiceNo.value,
+
+    date:date.value,
+
+    due:due.value,
+
+    items:[]
   };
 
-  document.querySelectorAll('.item-row').forEach(r => {
-    const i = r.querySelectorAll('input');
+  document.querySelectorAll('.item-row').forEach(r=>{
+
+    const i=r.querySelectorAll('input');
+
     data.items.push({
-      desc: i[0].value,
-      qty: i[1].value,
-      price: i[2].value
+
+      desc:i[0].value,
+
+      qty:i[1].value,
+
+      price:i[2].value
+
     });
+
   });
 
-  localStorage.setItem("invoiceDraft", JSON.stringify(data));
+  localStorage.setItem(
+    "invoiceDraft",
+    JSON.stringify(data)
+  );
 }
 
-document.addEventListener("input", autoSave);
+document.addEventListener("input",autoSave);
 
-/* CLEAN START */
-window.onload = function () {
-  document.getElementById('items').innerHTML = "";
+/* START */
+
+window.onload=function(){
+
+  document.getElementById('items').innerHTML='';
+
   addItem();
 };
 
