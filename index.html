@@ -198,7 +198,7 @@ button:hover{
   display:none;
   width:100%;
   max-width:100%;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
 .title{
@@ -237,7 +237,6 @@ td{
   font-size:18px;
   width:100%;
   overflow-wrap:break-word;
-  word-break:break-word;
 }
 
 .bank{
@@ -247,7 +246,6 @@ td{
   border-radius:12px;
   width:100%;
   overflow-wrap:break-word;
-  word-break:break-word;
 }
 
 .thank{
@@ -298,8 +296,6 @@ td{
     word-break:break-word;
   }
 
-  /* MOBILE BUTTON ORDER */
-
   .generate{order:1;}
   .add{order:2;}
   .button-grid:nth-of-type(1){order:3;}
@@ -342,7 +338,7 @@ td{
 
 <div class="container">
 
-<h2>G F Khan Invoice </h2>
+<h2>Farooq Khan Invoice Generator</h2>
 
 <input id="company" placeholder="Your Company Name">
 
@@ -510,9 +506,9 @@ function generateInvoice(){
 
     <p><strong>Invoice:</strong> ${invoiceNo.value}</p>
 
-    <p><strong>Date:</strong> ${formatDate(date.value)}</p>
+    <p><strong>Invoice Date:</strong> ${formatDate(date.value)}</p>
 
-    <p><strong>Due:</strong> ${formatDate(due.value)}</p>
+    <p><strong>Due Date:</strong> ${formatDate(due.value)}</p>
 
     <h3>Bill To</h3>
 
@@ -616,7 +612,7 @@ async function saveOnPhone(){
 
 /* SAVE PDF */
 
-function saveAsPDF(){
+async function saveAsPDF(){
 
   const element=document.getElementById('output');
 
@@ -626,9 +622,12 @@ function saveAsPDF(){
     invoiceName="Invoice";
   }
 
+  element.style.width="794px";
+  element.style.maxWidth="794px";
+
   const opt={
 
-    margin:5,
+    margin:[5,5,5,5],
 
     filename:invoiceName + ".pdf",
 
@@ -640,6 +639,7 @@ function saveAsPDF(){
     html2canvas:{
       scale:2,
       useCORS:true,
+      logging:false,
       scrollX:0,
       scrollY:0
     },
@@ -648,22 +648,22 @@ function saveAsPDF(){
       unit:'mm',
       format:'a4',
       orientation:'portrait'
-    },
-
-    pagebreak:{
-      mode:['avoid-all','css','legacy']
     }
+
   };
 
-  html2pdf()
+  await html2pdf()
     .set(opt)
     .from(element)
     .save();
+
+  element.style.width="100%";
+  element.style.maxWidth="100%";
 }
 
-/* EMAIL */
+/* EMAIL WITH PDF ATTACHMENT */
 
-function emailInvoice(){
+async function emailInvoice(){
 
   let invoiceName=invoiceNo.value.trim();
 
@@ -671,17 +671,68 @@ function emailInvoice(){
     invoiceName="Invoice";
   }
 
-  const subject=`Invoice ${invoiceName}`;
+  const element=document.getElementById('output');
 
-  const body=`Hi,
+  element.style.width="794px";
+  element.style.maxWidth="794px";
+
+  const pdfBlob=await html2pdf()
+    .set({
+
+      margin:[5,5,5,5],
+
+      filename:invoiceName + ".pdf",
+
+      image:{
+        type:'jpeg',
+        quality:1
+      },
+
+      html2canvas:{
+        scale:2,
+        useCORS:true
+      },
+
+      jsPDF:{
+        unit:'mm',
+        format:'a4',
+        orientation:'portrait'
+      }
+
+    })
+    .from(element)
+    .outputPdf('blob');
+
+  element.style.width="100%";
+  element.style.maxWidth="100%";
+
+  const file=new File(
+    [pdfBlob],
+    invoiceName + ".pdf",
+    {type:"application/pdf"}
+  );
+
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+
+    await navigator.share({
+
+      files:[file],
+
+      title:invoiceName,
+
+      text:`Hi,
 
 Please find the attached invoice ${invoiceName}.
 
 Best Regards,
-G F Khan`;
+G F Khan`
 
-  window.location.href=
-  `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+  }else{
+
+    alert("Your browser does not support direct email attachment sharing.");
+  }
 }
 
 /* RESET */
