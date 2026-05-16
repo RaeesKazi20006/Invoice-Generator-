@@ -1,0 +1,58 @@
+
+:root{
+  --bg: #0f172a;
+  --card: rgba(255,255,255,0.08);
+  --text: #fff;
+}
+
+body{
+  margin:0;
+  font-family: Arial;
+  background: var(--bg);
+  color: var(--text);
+  padding:20px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+}
+
+button{
+  padding:10px;
+  margin:5px 0;
+  width:100%;
+  cursor:pointer;
+}
+
+.item-row{
+  display:grid;
+  grid-template-columns:1fr 80px 80px;
+  gap:5px;
+  margin-bottom:5px;
+}
+
+.theme-btn{
+  background:#333;
+  color:#fff;
+}
+
+.print-area{
+  display:none;
+  width:210mm;
+  min-height:297mm;
+  background:#fff;
+  color:#000;
+  padding:15mm;
+}
+
+.export-mode{
+  background:#fff !important;
+  color:#000 !important;
+}
