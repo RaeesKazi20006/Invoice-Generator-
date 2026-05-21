@@ -141,19 +141,43 @@ button{
   background:#fff;
   color:#111;
   border-radius:18px;
-  padding:24px;
+  padding:30px;
   display:none;
   width:100%;
   overflow-x:auto;
   page-break-after:auto;
 }
 
-/* TITLE */
+/* INVOICE TITLE */
 
 .title{
-  font-size:30px;
+  font-size:40px;
   font-weight:700;
   color:#0b3c6d;
+  margin-bottom:20px;
+}
+
+/* COMPANY + DETAILS */
+
+.invoice p{
+  font-size:20px;
+  line-height:1.7;
+}
+
+/* BILL TO */
+
+.bill-heading{
+  font-size:32px;
+  font-weight:700;
+  margin-top:30px;
+  margin-bottom:10px;
+  color:#0b3c6d;
+}
+
+.bill-name{
+  font-size:26px;
+  font-weight:500;
+  margin-bottom:20px;
 }
 
 /* TABLE */
@@ -161,50 +185,59 @@ button{
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:20px;
+  margin-top:24px;
 }
 
 th{
   text-align:left;
-  padding:10px 0;
-  border-bottom:1px solid #ccc;
+  padding:16px 0;
+  border-bottom:2px solid #ccc;
   color:#0b3c6d;
-  font-size:13px;
+  font-size:22px;
+  font-weight:700;
 }
 
 td{
-  padding:10px 0;
+  padding:16px 0;
   border-bottom:1px solid #eee;
-  font-size:13px;
+  font-size:20px;
   word-break:break-word;
+  font-weight:500;
 }
 
 /* TOTAL */
 
 .total{
-  margin-top:20px;
+  margin-top:24px;
   text-align:right;
-  font-size:24px;
+  font-size:34px;
   font-weight:700;
 }
 
 /* BANK */
 
 .bank{
-  margin-top:20px;
+  margin-top:28px;
   border:2px solid #0b3c6d;
   padding:14px;
   border-radius:12px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.bank p{
+  margin:6px 0;
+  font-size:16px;
 }
 
 /* THANK */
 
 .thank{
   text-align:center;
-  font-size:36px;
+  font-size:44px;
   color:#0b3c6d;
   font-family:'Great Vibes',cursive;
-  margin-top:30px;
+  margin-top:40px;
 }
 
 /* PDF PAGE BREAK FIX */
@@ -241,11 +274,27 @@ th,
   }
 
   .invoice{
-    padding:16px;
+    padding:18px;
   }
 
-  table{
-    font-size:11px;
+  th{
+    font-size:16px;
+  }
+
+  td{
+    font-size:14px;
+  }
+
+  .bill-heading{
+    font-size:24px;
+  }
+
+  .bill-name{
+    font-size:20px;
+  }
+
+  .total{
+    font-size:26px;
   }
 }
 
@@ -433,9 +482,9 @@ function generateInvoice(){
 
     <p><strong>Due Date:</strong> ${formatDate(due.value)}</p>
 
-    <h3>Bill To</h3>
+    <div class="bill-heading">Bill To</div>
 
-    <p>${billTo.value}</p>
+    <div class="bill-name">${billTo.value}</div>
 
     <table>
 
