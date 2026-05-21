@@ -34,7 +34,7 @@ body{
 /* CONTAINER */
 
 .container{
-  max-width:700px;
+  max-width:850px;
   margin:auto;
   background:rgba(255,255,255,0.08);
   backdrop-filter:blur(16px);
@@ -49,20 +49,21 @@ body{
 h2{
   text-align:center;
   margin-bottom:20px;
+  font-size:34px;
 }
 
 /* INPUTS */
 
 input{
   width:100%;
-  padding:13px;
+  padding:14px;
   margin:6px 0;
   border-radius:12px;
   border:1px solid rgba(255,255,255,0.15);
   background:rgba(255,255,255,0.08);
   color:#fff;
   outline:none;
-  font-size:14px;
+  font-size:16px;
 }
 
 input::placeholder{
@@ -87,15 +88,16 @@ input::placeholder{
   display:block;
   margin-bottom:6px;
   font-weight:700;
+  font-size:16px;
 }
 
 /* ITEM ROW */
 
 .item-row{
   display:grid;
-  grid-template-columns:1fr 80px 100px 110px;
-  gap:8px;
-  margin-bottom:10px;
+  grid-template-columns:1fr 100px 120px 120px;
+  gap:10px;
+  margin-bottom:12px;
   align-items:center;
 }
 
@@ -103,11 +105,12 @@ input::placeholder{
 
 button{
   width:100%;
-  padding:14px;
+  padding:15px;
   border:none;
   border-radius:14px;
   color:#fff;
   font-weight:700;
+  font-size:15px;
   cursor:pointer;
   margin-top:10px;
 }
@@ -141,7 +144,7 @@ button{
   background:#fff;
   color:#111;
   border-radius:18px;
-  padding:30px;
+  padding:40px;
   display:none;
   width:100%;
   overflow-x:auto;
@@ -151,33 +154,33 @@ button{
 /* INVOICE TITLE */
 
 .title{
-  font-size:40px;
+  font-size:54px;
   font-weight:700;
   color:#0b3c6d;
-  margin-bottom:20px;
+  margin-bottom:24px;
 }
 
-/* COMPANY + DETAILS */
+/* TEXT */
 
 .invoice p{
-  font-size:20px;
-  line-height:1.7;
+  font-size:26px;
+  line-height:1.8;
 }
 
 /* BILL TO */
 
 .bill-heading{
-  font-size:32px;
+  font-size:42px;
   font-weight:700;
-  margin-top:30px;
-  margin-bottom:10px;
+  margin-top:34px;
+  margin-bottom:12px;
   color:#0b3c6d;
 }
 
 .bill-name{
-  font-size:26px;
+  font-size:34px;
   font-weight:500;
-  margin-bottom:20px;
+  margin-bottom:24px;
 }
 
 /* TABLE */
@@ -185,22 +188,22 @@ button{
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:24px;
+  margin-top:30px;
 }
 
 th{
   text-align:left;
-  padding:16px 0;
+  padding:22px 0;
   border-bottom:2px solid #ccc;
   color:#0b3c6d;
-  font-size:22px;
+  font-size:32px;
   font-weight:700;
 }
 
 td{
-  padding:16px 0;
+  padding:20px 0;
   border-bottom:1px solid #eee;
-  font-size:20px;
+  font-size:28px;
   word-break:break-word;
   font-weight:500;
 }
@@ -208,36 +211,34 @@ td{
 /* TOTAL */
 
 .total{
-  margin-top:24px;
+  margin-top:30px;
   text-align:right;
-  font-size:34px;
+  font-size:42px;
   font-weight:700;
 }
 
 /* BANK */
 
 .bank{
-  margin-top:28px;
+  margin-top:30px;
   border:2px solid #0b3c6d;
-  padding:14px;
-  border-radius:12px;
-  font-size:14px;
-  line-height:1.5;
+  padding:16px;
+  border-radius:14px;
 }
 
 .bank p{
-  margin:6px 0;
-  font-size:16px;
+  margin:8px 0;
+  font-size:18px;
 }
 
 /* THANK */
 
 .thank{
   text-align:center;
-  font-size:44px;
+  font-size:58px;
   color:#0b3c6d;
   font-family:'Great Vibes',cursive;
-  margin-top:40px;
+  margin-top:50px;
 }
 
 /* PDF PAGE BREAK FIX */
@@ -255,7 +256,7 @@ th,
 
 /* MOBILE */
 
-@media(max-width:600px){
+@media(max-width:700px){
 
   body{
     padding:12px;
@@ -274,27 +275,35 @@ th,
   }
 
   .invoice{
-    padding:18px;
+    padding:20px;
   }
 
-  th{
-    font-size:16px;
-  }
-
-  td{
-    font-size:14px;
+  .title{
+    font-size:38px;
   }
 
   .bill-heading{
-    font-size:24px;
+    font-size:28px;
   }
 
   .bill-name{
-    font-size:20px;
+    font-size:22px;
+  }
+
+  th{
+    font-size:18px;
+  }
+
+  td{
+    font-size:16px;
   }
 
   .total{
-    font-size:26px;
+    font-size:28px;
+  }
+
+  .thank{
+    font-size:42px;
   }
 }
 
@@ -369,18 +378,6 @@ th,
 
   <button class="print" onclick="printInvoice()">
     🖨 Print
-  </button>
-
-</div>
-
-<div class="button-grid">
-
-  <button class="save" onclick="savePNG()">
-    📥 Save PNG
-  </button>
-
-  <button class="email" onclick="emailInvoice()">
-    ✉ Email PDF
   </button>
 
 </div>
@@ -526,28 +523,6 @@ function printInvoice(){
   window.print();
 }
 
-/* SAVE PNG */
-
-async function savePNG(){
-
-  const element=document.getElementById('output');
-
-  const invoiceName=invoiceNo.value.trim() || "Invoice";
-
-  const canvas=await html2canvas(element,{
-    scale:2,
-    useCORS:true
-  });
-
-  const link=document.createElement('a');
-
-  link.download=invoiceName + ".png";
-
-  link.href=canvas.toDataURL();
-
-  link.click();
-}
-
 /* SAVE PDF */
 
 async function saveAsPDF(){
@@ -589,64 +564,6 @@ async function saveAsPDF(){
     .set(opt)
     .from(element)
     .save();
-}
-
-/* EMAIL PDF */
-
-async function emailInvoice(){
-
-  const element=document.getElementById('output');
-
-  const invoiceName=invoiceNo.value.trim() || "Invoice";
-
-  const worker = html2pdf().set({
-
-    margin:10,
-
-    filename:invoiceName + ".pdf",
-
-    image:{
-      type:'jpeg',
-      quality:1
-    },
-
-    html2canvas:{
-      scale:2,
-      useCORS:true,
-      scrollY:0
-    },
-
-    jsPDF:{
-      unit:'mm',
-      format:'a4',
-      orientation:'portrait'
-    },
-
-    pagebreak:{
-      mode:['avoid-all','css','legacy']
-    }
-
-  }).from(element);
-
-  const pdfBlob = await worker.outputPdf('blob');
-
-  const file = new File(
-    [pdfBlob],
-    invoiceName + ".pdf",
-    {type:"application/pdf"}
-  );
-
-  if(navigator.canShare && navigator.canShare({files:[file]})){
-
-    await navigator.share({
-      files:[file],
-      title:invoiceName
-    });
-
-  }else{
-
-    alert("Sharing not supported on this device.");
-  }
 }
 
 /* RESET */
