@@ -201,14 +201,14 @@ th{
   padding:10px 0;
   border-bottom:1px solid #ccc;
   color:#0b3c6d;
-  font-size:18px; /* BIGGER PRODUCT HEADINGS */
+  font-size:22px; /* BIGGER PRODUCT HEADINGS */
   font-weight:700;
 }
 
 td{
   padding:12px 0;
   border-bottom:1px solid #eee;
-  font-size:18px; /* BIGGER PRODUCT DETAILS */
+  font-size:20px; /* BIGGER PRODUCT DETAILS */
   font-weight:500;
 }
 
@@ -217,7 +217,7 @@ td{
 .total{
   margin-top:18px;
   text-align:right;
-  font-size:22px;
+  font-size:24px;
   font-weight:700;
 }
 
@@ -232,7 +232,7 @@ td{
 
 .bank p{
   margin:4px 0;
-  font-size:12px; /* SMALLER ACCOUNT DETAILS */
+  font-size:10px; /* SMALLER ACCOUNT DETAILS */
   line-height:1.4;
 }
 
@@ -263,7 +263,7 @@ td{
   }
 
   th{
-    font-size:15px;
+    font-size:16px;
   }
 
   td{
@@ -513,10 +513,15 @@ async function savePNG(){
 
   const element=document.getElementById('output');
 
+  if(element.innerHTML.trim()===""){
+    alert("Please generate invoice first");
+    return;
+  }
+
   const invoiceName=invoiceNo.value.trim() || "Invoice";
 
   const canvas=await html2canvas(element,{
-    scale:2,
+    scale:1.5,
     useCORS:true
   });
 
@@ -524,7 +529,7 @@ async function savePNG(){
 
   link.download=invoiceName + ".png";
 
-  link.href=canvas.toDataURL();
+  link.href=canvas.toDataURL("image/png");
 
   link.click();
 }
@@ -535,22 +540,28 @@ async function saveAsPDF(){
 
   const element=document.getElementById('output');
 
+  if(element.innerHTML.trim()===""){
+    alert("Please generate invoice first");
+    return;
+  }
+
   const invoiceName=invoiceNo.value.trim() || "Invoice";
 
   const opt={
 
-    margin:8,
+    margin:[5,5,5,5],
 
     filename:invoiceName + ".pdf",
 
     image:{
       type:'jpeg',
-      quality:1
+      quality:0.98
     },
 
     html2canvas:{
-      scale:2,
-      useCORS:true
+      scale:1.2,
+      useCORS:true,
+      logging:false
     },
 
     jsPDF:{
@@ -573,22 +584,28 @@ async function emailInvoice(){
 
   const element=document.getElementById('output');
 
+  if(element.innerHTML.trim()===""){
+    alert("Please generate invoice first");
+    return;
+  }
+
   const invoiceName=invoiceNo.value.trim() || "Invoice";
 
   const worker = html2pdf().set({
 
-    margin:8,
+    margin:[5,5,5,5],
 
     filename:invoiceName + ".pdf",
 
     image:{
       type:'jpeg',
-      quality:1
+      quality:0.98
     },
 
     html2canvas:{
-      scale:2,
-      useCORS:true
+      scale:1.2,
+      useCORS:true,
+      logging:false
     },
 
     jsPDF:{
