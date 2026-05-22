@@ -26,7 +26,6 @@ body{
   font-family:'Poppins',sans-serif;
   margin:0;
   padding:20px;
-  min-height:100vh;
   background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
   color:#fff;
 }
@@ -34,14 +33,13 @@ body{
 /* CONTAINER */
 
 .container{
-  max-width:850px;
+  max-width:820px;
   margin:auto;
   background:rgba(255,255,255,0.08);
   backdrop-filter:blur(16px);
   border:1px solid rgba(255,255,255,0.08);
   padding:24px;
   border-radius:24px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.35);
 }
 
 /* TITLE */
@@ -49,21 +47,20 @@ body{
 h2{
   text-align:center;
   margin-bottom:20px;
-  font-size:34px;
 }
 
 /* INPUTS */
 
 input{
   width:100%;
-  padding:14px;
+  padding:12px;
   margin:6px 0;
   border-radius:12px;
   border:1px solid rgba(255,255,255,0.15);
   background:rgba(255,255,255,0.08);
   color:#fff;
   outline:none;
-  font-size:16px;
+  font-size:14px;
 }
 
 input::placeholder{
@@ -88,16 +85,15 @@ input::placeholder{
   display:block;
   margin-bottom:6px;
   font-weight:700;
-  font-size:16px;
 }
 
 /* ITEM ROW */
 
 .item-row{
   display:grid;
-  grid-template-columns:1fr 100px 120px 120px;
-  gap:10px;
-  margin-bottom:12px;
+  grid-template-columns:1fr 80px 100px 110px;
+  gap:8px;
+  margin-bottom:10px;
   align-items:center;
 }
 
@@ -105,12 +101,11 @@ input::placeholder{
 
 button{
   width:100%;
-  padding:15px;
+  padding:14px;
   border:none;
   border-radius:14px;
   color:#fff;
   font-weight:700;
-  font-size:15px;
   cursor:pointer;
   margin-top:10px;
 }
@@ -144,43 +139,53 @@ button{
   background:#fff;
   color:#111;
   border-radius:18px;
-  padding:40px;
+  padding:24px;
   display:none;
   width:100%;
-  overflow-x:auto;
-  page-break-after:auto;
 }
 
-/* INVOICE TITLE */
+/* TITLE */
 
 .title{
-  font-size:54px;
+  font-size:34px;
   font-weight:700;
   color:#0b3c6d;
-  margin-bottom:24px;
+  margin-bottom:12px;
 }
 
-/* TEXT */
+/* COMPANY */
 
-.invoice p{
-  font-size:26px;
-  line-height:1.8;
+.company-name{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+/* DETAILS */
+
+.details{
+  font-size:14px;
+  line-height:1.4;
+  margin-bottom:18px;
+}
+
+.details p{
+  margin:6px 0;
 }
 
 /* BILL TO */
 
 .bill-heading{
-  font-size:42px;
+  font-size:20px;
   font-weight:700;
-  margin-top:34px;
-  margin-bottom:12px;
   color:#0b3c6d;
+  margin-top:18px;
+  margin-bottom:6px;
 }
 
 .bill-name{
-  font-size:34px;
-  font-weight:500;
-  margin-bottom:24px;
+  font-size:18px;
+  margin-bottom:12px;
 }
 
 /* TABLE */
@@ -188,83 +193,62 @@ button{
 table{
   width:100%;
   border-collapse:collapse;
-  margin-top:30px;
+  margin-top:14px;
 }
 
 th{
   text-align:left;
-  padding:22px 0;
-  border-bottom:2px solid #ccc;
+  padding:10px 0;
+  border-bottom:1px solid #ccc;
   color:#0b3c6d;
-  font-size:32px;
+  font-size:18px; /* BIGGER PRODUCT HEADINGS */
   font-weight:700;
 }
 
 td{
-  padding:20px 0;
+  padding:12px 0;
   border-bottom:1px solid #eee;
-  font-size:28px;
-  word-break:break-word;
+  font-size:18px; /* BIGGER PRODUCT DETAILS */
   font-weight:500;
 }
 
 /* TOTAL */
 
 .total{
-  margin-top:30px;
+  margin-top:18px;
   text-align:right;
-  font-size:42px;
+  font-size:22px;
   font-weight:700;
 }
 
 /* BANK */
 
 .bank{
-  margin-top:30px;
+  margin-top:18px;
   border:2px solid #0b3c6d;
-  padding:16px;
-  border-radius:14px;
+  padding:10px 14px;
+  border-radius:12px;
 }
 
 .bank p{
-  margin:8px 0;
-  font-size:18px;
+  margin:4px 0;
+  font-size:12px; /* SMALLER ACCOUNT DETAILS */
+  line-height:1.4;
 }
 
 /* THANK */
 
 .thank{
   text-align:center;
-  font-size:58px;
+  font-size:34px;
   color:#0b3c6d;
   font-family:'Great Vibes',cursive;
-  margin-top:50px;
-}
-
-/* PDF PAGE BREAK FIX */
-
-table,
-tr,
-td,
-th,
-.bank,
-.total,
-.thank{
-  page-break-inside:avoid;
-  break-inside:avoid;
+  margin-top:18px;
 }
 
 /* MOBILE */
 
-@media(max-width:700px){
-
-  body{
-    padding:12px;
-  }
-
-  .container{
-    padding:16px;
-  }
+@media(max-width:600px){
 
   .item-row{
     grid-template-columns:1fr;
@@ -275,35 +259,19 @@ th,
   }
 
   .invoice{
-    padding:20px;
-  }
-
-  .title{
-    font-size:38px;
-  }
-
-  .bill-heading{
-    font-size:28px;
-  }
-
-  .bill-name{
-    font-size:22px;
+    padding:16px;
   }
 
   th{
-    font-size:18px;
+    font-size:15px;
   }
 
   td{
-    font-size:16px;
-  }
-
-  .total{
-    font-size:28px;
+    font-size:15px;
   }
 
   .thank{
-    font-size:42px;
+    font-size:28px;
   }
 }
 
@@ -378,6 +346,18 @@ th,
 
   <button class="print" onclick="printInvoice()">
     🖨 Print
+  </button>
+
+</div>
+
+<div class="button-grid">
+
+  <button class="save" onclick="savePNG()">
+    📥 Save PNG
+  </button>
+
+  <button class="email" onclick="emailInvoice()">
+    ✉ Email PDF
   </button>
 
 </div>
@@ -471,13 +451,17 @@ function generateInvoice(){
 
     <div class="title">INVOICE</div>
 
-    <p><strong>${company.value}</strong></p>
+    <div class="company-name">${company.value}</div>
 
-    <p><strong>Invoice:</strong> ${invoiceNo.value}</p>
+    <div class="details">
 
-    <p><strong>Invoice Date:</strong> ${formatDate(date.value)}</p>
+      <p><strong>Invoice:</strong> ${invoiceNo.value}</p>
 
-    <p><strong>Due Date:</strong> ${formatDate(due.value)}</p>
+      <p><strong>Invoice Date:</strong> ${formatDate(date.value)}</p>
+
+      <p><strong>Due Date:</strong> ${formatDate(due.value)}</p>
+
+    </div>
 
     <div class="bill-heading">Bill To</div>
 
@@ -523,6 +507,28 @@ function printInvoice(){
   window.print();
 }
 
+/* SAVE PNG */
+
+async function savePNG(){
+
+  const element=document.getElementById('output');
+
+  const invoiceName=invoiceNo.value.trim() || "Invoice";
+
+  const canvas=await html2canvas(element,{
+    scale:2,
+    useCORS:true
+  });
+
+  const link=document.createElement('a');
+
+  link.download=invoiceName + ".png";
+
+  link.href=canvas.toDataURL();
+
+  link.click();
+}
+
 /* SAVE PDF */
 
 async function saveAsPDF(){
@@ -533,7 +539,7 @@ async function saveAsPDF(){
 
   const opt={
 
-    margin:10,
+    margin:8,
 
     filename:invoiceName + ".pdf",
 
@@ -544,18 +550,13 @@ async function saveAsPDF(){
 
     html2canvas:{
       scale:2,
-      useCORS:true,
-      scrollY:0
+      useCORS:true
     },
 
     jsPDF:{
       unit:'mm',
       format:'a4',
       orientation:'portrait'
-    },
-
-    pagebreak:{
-      mode:['avoid-all','css','legacy']
     }
 
   };
@@ -564,6 +565,59 @@ async function saveAsPDF(){
     .set(opt)
     .from(element)
     .save();
+}
+
+/* EMAIL PDF */
+
+async function emailInvoice(){
+
+  const element=document.getElementById('output');
+
+  const invoiceName=invoiceNo.value.trim() || "Invoice";
+
+  const worker = html2pdf().set({
+
+    margin:8,
+
+    filename:invoiceName + ".pdf",
+
+    image:{
+      type:'jpeg',
+      quality:1
+    },
+
+    html2canvas:{
+      scale:2,
+      useCORS:true
+    },
+
+    jsPDF:{
+      unit:'mm',
+      format:'a4',
+      orientation:'portrait'
+    }
+
+  }).from(element);
+
+  const pdfBlob = await worker.outputPdf('blob');
+
+  const file = new File(
+    [pdfBlob],
+    invoiceName + ".pdf",
+    {type:"application/pdf"}
+  );
+
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+
+    await navigator.share({
+      files:[file],
+      title:invoiceName
+    });
+
+  }else{
+
+    alert("Sharing not supported on this device.");
+  }
 }
 
 /* RESET */
